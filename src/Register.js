@@ -11,7 +11,12 @@ import freeEmailDomains from "free-email-domains";
 import passwordValidator from "password-validator";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import { Button, IconButton, InputAdornment, OutlinedInput } from "@mui/material";
+import {
+  Button,
+  IconButton,
+  InputAdornment,
+  OutlinedInput,
+} from "@mui/material";
 import firebase from "firebase/compat/app";
 import axios from "./axios";
 import loginImg from "./login.jpeg";
@@ -49,16 +54,15 @@ function Register(props) {
   const validPassword = (pwd) => {
     var schema = new passwordValidator();
 
-    // TODO: uncomment later
-    // schema
-    //   .is()
-    //   .min(8) // Minimum length 8
-    //   .has()
-    //   .uppercase() // Must have uppercase letters
-    //   .has()
-    //   .lowercase()
-    //   .has()
-    //   .digits(1);
+    schema
+      .is()
+      .min(8) // Minimum length 8
+      .has()
+      .uppercase() // Must have uppercase letters
+      .has()
+      .lowercase()
+      .has()
+      .digits(1);
 
     return schema.validate(pwd);
   };
@@ -239,7 +243,9 @@ function Register(props) {
           }
         />
         <br />
-        <Button variant="contained" type="submit">Register</Button>
+        <Button variant="contained" type="submit">
+          Register
+        </Button>
       </form>
       <p>
         <Link to="/login" className="login__register">

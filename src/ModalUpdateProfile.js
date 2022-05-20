@@ -26,6 +26,7 @@ const ModalUpdateProfile = forwardRef(
     const [bio, setBio] = useState(null);
     const [file, setFile] = useState(null);
     const [formValidated, setFormValidated] = useState(false);
+    const [isUploading, setIsUploading] = useState(false);
 
     useEffect(() => {
       if (open) {
@@ -99,6 +100,8 @@ const ModalUpdateProfile = forwardRef(
               Photo required
             </div>
           )}
+
+          {isUploading === true && <div>uploading photo...</div>}
           <Stack direction="row" alignItems="center" spacing={2}>
             <label htmlFor="contained-button-file">
               <Input
@@ -107,6 +110,7 @@ const ModalUpdateProfile = forwardRef(
                 type="file"
                 onChange={(e) => {
                   if (e.target.files && e.target.files.length > 0) {
+                    setIsUploading(true);
                     const file = e.target.files[0];
 
                     storage
@@ -117,8 +121,10 @@ const ModalUpdateProfile = forwardRef(
                         snapshot.ref.getDownloadURL().then((url) => {
                           updateProfile(auth.currentUser, {
                             photoURL: url,
+                          }).then((res) => {
+                            setFile(file);
+                            setIsUploading(false);
                           });
-                          setFile(file);
                         });
                       });
                   }
